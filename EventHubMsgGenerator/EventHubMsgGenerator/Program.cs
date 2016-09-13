@@ -48,7 +48,7 @@ namespace EventHubMsgGenerator
                     Console.ResetColor();
                 }
 
-                Thread.Sleep(5000);
+                Thread.Sleep(1000);
             }
         }
     }
