@@ -1,0 +1,12 @@
+{
+  "bindings": [
+    {
+      "type": "eventHubTrigger",
+      "name": "myEventHubMessage",
+      "direction": "in",
+      "path": "eventhubdemo",
+      "connection": "Sample Event Hub"
+    }
+  ],
+  "disabled": false
+}
