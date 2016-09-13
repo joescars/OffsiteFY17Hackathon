@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using Microsoft.ServiceBus.Messaging;
+using Newtonsoft.Json;
 
 namespace EventHubMsgGenerator
 {
@@ -30,10 +31,15 @@ namespace EventHubMsgGenerator
                 try
                 {
                     var myPh = rnd.Next(0, 10);
-                    //var message = Guid.NewGuid().ToString();
-                    var message = "PH Level: " + myPh;
-                    Console.WriteLine("{0} > Sending message: {1}", DateTime.Now, message);
-                    eventHubClient.Send(new EventData(Encoding.UTF8.GetBytes(message)));
+
+                    phReadingObj ph = new phReadingObj();
+                    ph.nurseryId = 1;
+                    ph.rowId = 2;
+                    ph.phReading = myPh;
+
+                    var serializedstring = JsonConvert.SerializeObject(ph);
+                    Console.WriteLine("{0} > Sending message: {1}", DateTime.Now, serializedstring);
+                    eventHubClient.Send(new EventData(Encoding.UTF8.GetBytes(serializedstring)));
                 }
                 catch (Exception exception)
                 {
@@ -45,5 +51,14 @@ namespace EventHubMsgGenerator
                 Thread.Sleep(5000);
             }
         }
+    }
+
+    class phReadingObj
+    {
+        public int nurseryId { get; set; }
+        public int rowId { get; set; }
+        public int sensorId { get; set; }
+        public double phReading { get; set; }
+        public DateTime DTStamp = DateTime.Now;
     }
 }
